@@ -1,0 +1,8 @@
+{
+  "admin_token": "change-this-admin-token",
+  "session_ttl_seconds": 604800,
+  "github": {
+    "allowed_users": [],
+    "repo": ""
+  }
+}

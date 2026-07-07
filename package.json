@@ -1,0 +1,13 @@
+{
+  "name": "luxe-boutique-cms-netlify-ready-v9-fixed",
+  "version": "10.0.0",
+  "private": true,
+  "description": "Standalone Netlify-ready CMS for Luxe Boutique with linked website API, image galleries, product and category discounts, options, Instagram, product media links, visitor tracking, cart orders, quantity sold, colour controls, and inquiries.",
+  "scripts": {
+    "build": "node tools/no-build.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9"
+  },
+  "devDependencies": {}
+}

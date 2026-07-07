@@ -1,0 +1,10 @@
+Compact CMS display update
+
+CMS changes:
+- Reduced product/category image preview height inside the editor.
+- Reduced gallery preview thumbnails and used-image listing thumbnails.
+- Tightened panel padding, field spacing, textareas, and dashboard statistic cards.
+- Kept all existing CMS features and data fields unchanged.
+
+Files changed:
+- public/cms/assets/cms.css

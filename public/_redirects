@@ -1,0 +1,5 @@
+/ /cms/index.html 200
+/cms /cms/index.html 200
+/cms/ /cms/index.html 200
+/api/* /.netlify/functions/cms-api/:splat 200
+/* /cms/index.html 200

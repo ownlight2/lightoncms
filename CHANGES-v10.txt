@@ -1,0 +1,25 @@
+v10 changes
+===========
+
+CMS package changes:
+- Products now include media_links: label, URL, hide checkbox, and sort order.
+- Add Instagram, TikTok, YouTube, Google Maps/place, Facebook, or any other URL under each product's photo/gallery fields.
+- Hidden media links remain saved in CMS but are not returned to the public website.
+- Added public /api/track endpoint for anonymous product analytics.
+- Dashboard now shows most enquired products, top viewed products, and top inquiry/WhatsApp clicked products.
+- Submitted inquiry forms are counted automatically.
+- Tracker keeps product/event records only; it does not save visitor names, phone numbers, or IP addresses.
+
+Netlify hosting:
+- Build command: npm run build
+- Publish directory: public
+- Functions directory: netlify/functions
+- API base for website config.js: https://your-netlify-site.netlify.app/api
+
+Own Light cart/purchase update
+- Brand fallback changed to Own Light.
+- Added public /api/orders endpoint to save customer purchase details from website cart checkout.
+- Product sold_qty is increased automatically when a cart purchase is submitted.
+- Added Orders tab in CMS for customer purchase details, order status, purchased products, and quantities.
+- Added dashboard quantity-sold/product sales summary.
+- Added CMS colour controls for text, background, accent, header, footer, and WhatsApp button colours.

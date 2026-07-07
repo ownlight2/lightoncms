@@ -1,0 +1,9 @@
+Own Light CMS blog and variant quantity fix
+------------------------------------------
+- CMS product editor now includes Quantity by size and colour rows.
+- Use Add row for manual size/colour inventory, or Generate rows from current sizes and colours.
+- Each variant row has Stock qty and Sold qty.
+- Checkout orders update matching size/colour Sold qty automatically.
+- CMS API now publishes blogs by list and individual blog slug.
+- Blog data is normalized before save so blog pages display consistently on the website.
+- Confirmed old SHREE brand text is not present in CMS public files.

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Own Light CMS</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="assets/cms.css">
+</head>
+<body>
+  <script>
+    window.LUXE_CMS_STATIC_LOGIN = true;
+    window.LUXE_CMS_NETLIFY = true;
+    window.LUXE_CMS_API_BASE = '/api';
+  </script>
+
+  <main class="login-shell" id="staticLogin">
+    <form class="login-card" id="staticLoginForm" autocomplete="off">
+      <div class="mark">CMS</div>
+      <h1>Own Light CMS</h1>
+      <p>This Netlify-ready CMS accepts a GitHub Developer personal access token for one-time login. After login, edit products, categories, multiple product photos, sizes, colours, discounts, customer purchases, inquiries, Instagram, WhatsApp, fonts, colours, and high-quality CMS-uploaded images.</p>
+      <div class="alert error" id="staticLoginError" hidden></div>
+      <label>GitHub token
+        <input type="password" id="staticAdminToken" required autofocus placeholder="Paste GitHub personal access token">
+      </label>
+      <button type="submit">Login to CMS</button>
+      <small>Create token from <code>GitHub → Settings → Developer settings → Personal access tokens → New token</code>. Paste it once here. The GitHub token is checked by the Netlify Function and is not saved in the browser; only a secure HttpOnly CMS session cookie is saved.</small>
+    </form>
+  </main>
+
+  <div class="app" data-app id="cmsApp" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span>OL</span><strong>Own Light CMS</strong></div>
+      <nav>
+        <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-btn" data-tab="settings">Settings, Fonts & Colours</button>
+        <button class="nav-btn" data-tab="categories">Categories</button>
+        <button class="nav-btn" data-tab="products">Products</button>
+        <button class="nav-btn" data-tab="orders">Orders</button>
+        <button class="nav-btn" data-tab="blogs">Blogs</button>
+        <button class="nav-btn" data-tab="inquiries">Inquiries</button>
+        <button class="nav-btn" data-tab="images">Images</button>
+      </nav>
+      <button class="logout logout-button" id="staticLogout" type="button">Logout</button>
+    </aside>
+    <main class="main">
+      <header class="top">
+        <div>
+          <p class="eyebrow">Token protected admin</p>
+          <h1 data-title>Dashboard</h1>
+        </div>
+        <div class="actions">
+          <button class="ghost" id="reloadBtn">Reload</button>
+          <button class="primary" id="saveBtn">Save Changes</button>
+        </div>
+      </header>
+      <div id="notice" class="notice" hidden></div>
+
+      <section class="tab active" id="tab-dashboard">
+        <div class="stats">
+          <div><strong id="statCategories">0</strong><span>Categories</span></div>
+          <div><strong id="statProducts">0</strong><span>Products</span></div>
+          <div><strong id="statBlogs">0</strong><span>Blogs</span></div>
+          <div><strong id="statInquiries">0</strong><span>Inquiries</span></div>
+          <div><strong id="statOrders">0</strong><span>Orders</span></div>
+          <div><strong id="statSoldQty">0</strong><span>Qty Sold</span></div>
+          <div><strong id="statProductViews">0</strong><span>Product Views</span></div>
+          <div><strong id="statInquiryClicks">0</strong><span>Inquiry Clicks</span></div>
+          <div><strong id="statHidden">0</strong><span>Hidden Items</span></div>
+        </div>
+        <div class="panel">
+          <h2>Most enquired products</h2>
+          <p>This shows which products customers submit inquiries for most. Website inquiry and WhatsApp clicks are tracked separately below.</p>
+          <div class="tracker-list" id="topInquiryProducts"></div>
+        </div>
+        <div class="panel">
+          <h2>Quantity sold by product</h2>
+          <p>This shows the number of pieces sold from customer cart purchases.</p>
+          <div class="tracker-list" id="topSoldProducts"></div>
+        </div>
+        <div class="panel">
+          <h2>Visitor tracker by product</h2>
+          <p>Anonymous product views and inquiry/WhatsApp button clicks are counted here. No visitor names, phone numbers, or IP addresses are stored in this tracker.</p>
+          <div class="tracker-grid">
+            <div><h3>Top viewed products</h3><div class="tracker-list" id="topVisitorProducts"></div></div>
+            <div><h3>Top inquiry/WhatsApp clicks</h3><div class="tracker-list" id="topClickProducts"></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>What this CMS controls</h2>
+          <p>Edit fonts, colours, WhatsApp number, Instagram link, homepage hero, category names, products, prices, discounts, size/colour options, stock quantity, product images, multiple gallery images, product video/social/location links, inquiries, visitor tracking, and blog visibility. Saved CMS data is what the public website reads.</p>
+          <div class="hint-grid">
+            <div><b>Security</b><span>Admin editing uses a backend HttpOnly session after login. The GitHub token is checked once by the Netlify Function and is not stored in frontend JavaScript.</span></div>
+            <div><b>Images</b><span>Upload high-quality JPG, PNG, GIF, WebP, AVIF, BMP, and safe SVG images up to 25 MB. Uploaded CMS images can be previewed and deleted.</span></div>
+            <div><b>Website link</b><span>Use your API URL in the public website <code>config.js</code>. Product changes and image changes show on the website after saving.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-settings">
+        <div class="panel form-grid two" id="settingsForm"></div>
+      </section>
+
+      <section class="tab" id="tab-categories">
+        <div class="section-line"><h2>Categories</h2><button class="primary small" id="addCategory">Add Category</button></div>
+        <div class="list" id="categoryList"></div>
+      </section>
+
+      <section class="tab" id="tab-products">
+        <div class="section-line"><h2>Products</h2><button class="primary small" id="addProduct">Add Product</button></div>
+        <div class="list" id="productList"></div>
+      </section>
+
+      <section class="tab" id="tab-orders">
+        <div class="section-line"><h2>Customer Orders / Purchases</h2><button class="ghost small" id="reloadBtnOrders" onclick="document.getElementById('reloadBtn').click()">Reload</button></div>
+        <div class="list" id="orderList"></div>
+      </section>
+
+      <section class="tab" id="tab-blogs">
+        <div class="section-line"><h2>Blogs</h2><button class="primary small" id="addBlog">Add Blog</button></div>
+        <div class="list" id="blogList"></div>
+      </section>
+
+      <section class="tab" id="tab-inquiries">
+        <div class="section-line"><h2>Customer Inquiries</h2><button class="ghost small" id="reloadBtnInquiries" onclick="document.getElementById('reloadBtn').click()">Reload</button></div>
+        <div class="list" id="inquiryList"></div>
+      </section>
+
+      <section class="tab" id="tab-images">
+        <div class="panel">
+          <h2>Upload image</h2>
+          <p>Upload once, copy the image URL, then paste it into a category, product, blog, hero, or gallery field. You can also upload directly from those fields.</p>
+          <div class="upload-box">
+            <input type="file" id="globalUpload" accept="image/*,.svg,.avif,.webp,.bmp,.gif">
+            <button class="primary" id="globalUploadBtn">Upload Image</button>
+          </div>
+          <div id="globalUploadResult"></div>
+        </div>
+        <div class="panel">
+          <h2>Delete uploaded image</h2>
+          <p>Only files uploaded inside this CMS can be deleted. External URLs or website asset images are not removed from the server.</p>
+          <div class="inline-input"><input id="deleteImageUrl" placeholder="Paste CMS image URL"><button class="danger" id="deleteImageBtn">Delete Image</button></div>
+        </div>
+              <div class="panel">
+          <h2>Images currently used in CMS</h2>
+          <p>Preview attached images here. Delete file removes CMS-uploaded files from storage and clears the field; Clear only removes the URL from CMS data.</p>
+          <div class="used-image-list" id="usedImageList"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/cms.js" defer></script>
+</body>
+</html>
